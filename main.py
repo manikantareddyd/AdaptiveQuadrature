@@ -30,7 +30,6 @@ class AdaptiveQuadrature:
         i = self.I(a,b)
         i2 = self.I2(a,b)
         e = i2 - i
-
         if e < self.err:
             I = 16*i2/15 - i/15
             return I
@@ -38,5 +37,7 @@ class AdaptiveQuadrature:
             I = self.Q(a,c) + self.Q(c,b)
             return I
 
+    def plot(self):
+        
 
 a = AdaptiveQuadrature()
