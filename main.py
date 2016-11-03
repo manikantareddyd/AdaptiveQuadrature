@@ -1,11 +1,12 @@
 from equation import *
-
+import matplotlib.pyplot as plt
 class AdaptiveQuadrature:
     def __init__(self):
         self.e = Equation()
         self.a = float(input())
         self.b = float(input())
         self.err = float(input())
+        print(self.a,self.b,self.err)
         self.points = []
         print(self.Q(self.a,self.b))
         self.points = sorted(list(set(self.points)))
@@ -36,8 +37,27 @@ class AdaptiveQuadrature:
         else:
             I = self.Q(a,c) + self.Q(c,b)
             return I
-
     def plot(self):
-        
+        y_t = [self.e.f(t) for t  in self.points]
+        x_t = self.points
+        x = [self.a + 0.1*t for t in range(int((self.b-self.a)/0.1))]
+        y = [self.e.f(t) for t in x]
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_title("Adaptive Quadrature")
+        ax.set_ylabel("Y")
+        ax.set_xlabel("X")
+        ax.axhline(0)
+        ax.plot(x,y, "-", label='Funtion')
+        for i in range(len(x_t)):
+            ax.plot([x_t[i],x_t[i]],[0,y_t[i]], "-", c='r')
+        # ax.scatter(x_t,y_t, s=30, c='r', marker="s", label='Quadrature Points')
+        plt.legend(loc='best')
+        plt.show()
+        fig.savefig("Plot.png")
+
+
 
 a = AdaptiveQuadrature()
+print(a.points)
+a.plot()
